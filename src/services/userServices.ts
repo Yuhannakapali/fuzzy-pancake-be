@@ -47,7 +47,7 @@ export function generateJWT(payload:object) {
       const token = generateJWT({ email });
       return { success: true, status: 200, message: "welcome", token: token };
     } catch (error) {
-      return { success: false, error: error };
+      return { success: false, error: "something went wrong" + error};
     }
   };
 
