@@ -2,13 +2,19 @@ import dotenv from 'dotenv';
 dotenv.config()
 import express from 'express';
 import { AppDataSource } from './db/dataSource';
+import { userRouter } from './routes/user';
+import cookieParser from "cookie-parser";
 
 const app = express();
 
-app.get('/api/home', async(req, res) => {
-    res.send("<h1>Hello, What's up dude? <h1/>")
-})
+app.use(express.urlencoded({extended: false}))
+app.use(express.json())
+app.use(cookieParser());
 
+app.get('/api/home', async(_, res) => {
+    res.send("<h1>Hello, What's up dude? <h1/>")    
+})
+app.use(userRouter)
 
 app.listen(3000, () => {
     console.log("server started on port 3000")
