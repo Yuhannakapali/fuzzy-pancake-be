@@ -15,8 +15,8 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 
     const user = await User.findOne({ where: { email } });
     res.locals.user = user;
-    return next();
+    return next();  
   } catch (error) {
     next(error);
   }
-};
+};  

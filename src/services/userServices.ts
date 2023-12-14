@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 type UserType = {
     email: string,
-    username?: string,
+    username: string,
     password: string
 }
 
@@ -45,7 +45,7 @@ export function generateJWT(payload:object) {
         };
       }
       const token = generateJWT({ email });
-      return { success: true, status: 200, message: "welcome", token: token };
+      return { success: true, status: 200, message: "welcome", token: token, username:user.username };
     } catch (error) {
       return { success: false, error: "something went wrong" + error};
     }
@@ -60,3 +60,4 @@ export const findUserByEmail = async (email: string) => {
     });
     return user;
   };
+
