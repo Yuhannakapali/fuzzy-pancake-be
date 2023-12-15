@@ -9,7 +9,6 @@ type UserType = {
 }
 
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const signupUser = async(userFeatures: UserType) => {
     const {email, username, password} = userFeatures
 try {
