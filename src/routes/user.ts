@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import {loginUser, signupUser } from "../services/userServices";
+import {findUserByEmail, loginUser, signupUser } from "../services/userServices";
 import auth from "../middleware/auth";
 import user from "../middleware/user";
 
@@ -18,6 +18,15 @@ router.post("/api/signup", async (req: Request, res: Response) => {
     return res.status(500).json({ error: "something went wrong" + error });
   }
 });
+
+router.get("/api/user/:email", async( req: Request, res: Response) => {
+  const {email} = req.params;
+  const user = await findUserByEmail(email)
+  if(!user) {
+    return res.status(404).send("user not found")
+  }
+return res.status(200).send(`welcome ${user.username}`)
+})
 
 router.post("/api/login", async (req, res) => {
   try {

@@ -16,9 +16,6 @@ app.use(cors({
     origin: 'http://localhost:3000'
 }))
 
-
-
-
 app.get('/api/home', async(_, res) => {
     res.send("<h1>Hello, What's up dude? <h1/>")    
 })
