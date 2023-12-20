@@ -40,7 +40,7 @@ router.post("/api/login", async (req, res) => {
       return res.status(400).json({ error: "please fill all the credentials" });
     }
     const user = await loginUser(email, password);
-    res.cookie("token", user.token, { httpOnly: true, maxAge: 360000 });
+    res.cookie("token", user.token, { httpOnly: true, maxAge: 360 });
     return res.status(200).json({ user });
   } catch (error) {
     return res.status(500).json({ error: "something went wrong" });
