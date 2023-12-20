@@ -1,7 +1,12 @@
 import express, { Request, Response } from "express";
-import {findUserByEmail, loginUser, signupUser } from "../services/userServices";
+import {
+  findUserByEmail,
+  loginUser,
+  signupUser,
+} from "../services/userServices";
 import auth from "../middleware/auth";
 import user from "../middleware/user";
+
 
 const router = express.Router();
 
@@ -19,14 +24,14 @@ router.post("/api/signup", async (req: Request, res: Response) => {
   }
 });
 
-router.get("/api/user/:email", async( req: Request, res: Response) => {
-  const {email} = req.params;
-  const user = await findUserByEmail(email)
-  if(!user) {
-    return res.status(404).send("user not found")
+router.get("/api/user/:email", async (req: Request, res: Response) => {
+  const { email } = req.params;
+  const user = await findUserByEmail(email);
+  if (!user) {
+    return res.status(404).send("user not found");
   }
-return res.status(200).send(`welcome ${user.username}`)
-})
+  return res.status(200).send(`welcome ${user.username}`);
+});
 
 router.post("/api/login", async (req, res) => {
   try {
@@ -46,11 +51,13 @@ router.get("/api/me", user, auth, (req: Request, res: Response) => {
   return res.json(res.locals.user);
 });
 
-router.get("/api/logout", user, auth, async (req, res) => {
+router.get("/api/logout", user, auth, async (req: Request, res: Response) => {
   res.cookie("token", "", { httpOnly: true, expires: new Date(0) });
   return res
     .status(200)
     .json({ sucess: true, msg: "user logged out successfully" });
 });
+
+
 
 export { router as userRouter };
