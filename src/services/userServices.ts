@@ -11,6 +11,7 @@ type UserType = {
 
 export const signupUser = async(userFeatures: UserType) => {
     const {email, username, password} = userFeatures
+// eslint-disable-next-line no-useless-catch
 try {
     const userWithEmail = await findUserByEmail(email);
     if(userWithEmail) {
@@ -20,7 +21,7 @@ try {
     await newUser.save()
     return {msg: "User created successfully", user: newUser}
 } catch (error) {
-    return {status:500 ,error: error}
+    throw error
 }
 }
 
@@ -33,7 +34,7 @@ export function generateJWT(payload:object) {
     try {
       const user = await findUserByEmail(email);
       if (!user) {
-        return { success: false, error: "user with this email does not exist" };
+        return { success: false, status:404, error: "user with this email does not exist" };
       }
       const matchPassword = await bcrypt.compare(password, user.password);
       if (!matchPassword) {
